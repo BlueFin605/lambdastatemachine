@@ -12,8 +12,6 @@ AWS.config.update({
 
 module.exports = {
   createStateFromS3: function(creator, callback) {
-    console.log(`createStateFromS3`)
-
     var s3 = new AWS.S3()
 
     // configuring parameters
@@ -24,20 +22,21 @@ module.exports = {
 
     s3.getObject(params, function (err, data) {
       if (err) {
-        console.log('Error', err)
+        console.log('createStateFromS3: Error', err)
         return callback(err, null)
       }
 
       // success
       if (data) {
-        console.log('data retrieved:', data.Body)
         let objectData = data.Body.toString('utf-8')
         var body = JSON.parse(objectData)
+        console.log('createStateFromS3: state retrieved:', body.state)
         var nextState = creator.createNextState(body.state, body.data)
         return callback(null, nextState)
       }
 
       // there is no data in the storage
+      console.log('createStateFromS3: no data, use default instead')
       return callback(null, creator.createNextState('onhook', null))
     })
   },
@@ -67,7 +66,6 @@ module.exports = {
 
       // success
       if (data) {
-        console.log('Uploaded in:', data.Location)
         callback(null, true)
         return
       }
