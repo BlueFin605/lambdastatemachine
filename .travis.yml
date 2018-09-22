@@ -8,7 +8,7 @@ jobs:
       provider: lambda
       function_name: "state-event-offhook"
       region: "us-east-1"
-      role: "arn:aws:iam::137362946849:role/lambda-s3-execution-role"
+      role: $AWS_ROLE
       runtime: "nodejs6.10"
       handler_name: "offhook"
       environment_variables:
@@ -22,7 +22,7 @@ jobs:
       provider: lambda
       function_name: "state-event-dial"
       region: "us-east-1"
-      role: "arn:aws:iam::137362946849:role/lambda-s3-execution-role"
+      role: $AWS_ROLE
       runtime: "nodejs6.10"
       handler_name: "dial"
       environment_variables:
@@ -36,7 +36,7 @@ jobs:
       provider: lambda
       function_name: "state-event-connected"
       region: "us-east-1"
-      role: "arn:aws:iam::137362946849:role/lambda-s3-execution-role"
+      role: $AWS_ROLE
       runtime: "nodejs6.10"
       handler_name: "connected"
       environment_variables:
@@ -50,7 +50,7 @@ jobs:
       provider: lambda
       function_name: "state-event-hangup"
       region: "us-east-1"
-      role: "arn:aws:iam::137362946849:role/lambda-s3-execution-role"
+      role: $AWS_ROLE
       runtime: "nodejs6.10"
       handler_name: "hangup"
       environment_variables:
