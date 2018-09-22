@@ -22,6 +22,6 @@ exports.hangup = function (event, context, callback) {
 // }
 
 // this.offhook('event offhook', null, (err, result) => console.log(`response from transition<${err}>`))
-this.dial({number: '+6402712345'}, null, (err, result) => console.log(`response from transition<${err}>`))
+// this.dial({number: '+6402712345'}, null, (err, result) => console.log(`response from transition<${err}>`))
 // this.connected('event connected', null, (err, result) => console.log(`response from transition<${err}>`))
 // this.hangup('event hangup', null, (err, result) => console.log(`response from transition<${err}>`))
