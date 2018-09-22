@@ -16,6 +16,24 @@ exports.hangup = function (event, context, callback) {
     sm.StateMachine().changeStateAsync((state, data, changecallback) => state.hangUp(data, changecallback), callback)
 }
 
+exports.action = function (event, context, callback) {
+    switch (event.action)
+    {
+        case 'offhook':
+            sm.StateMachine().changeStateAsync((state, data, changecallback) => state.offHook(data, changecallback), callback)
+            break;
+        case 'dial':
+            sm.StateMachine().changeStateAsync((state, data, changecallback) => state.dial(data, changecallback, event.number), callback)
+            break;
+        case 'connected':
+            sm.StateMachine().changeStateAsync((state, data, changecallback) => state.connected(data, changecallback), callback)
+            break;
+        case 'hangup':
+            sm.StateMachine().changeStateAsync((state, data, changecallback) => state.hangUp(data, changecallback), callback)
+            break;
+    }
+}
+
 // function onCompleted(err, result, context, callback) {
 //     console.log(`onCompleted(${err},${result})`)
 //     callback(err,result)
