@@ -11,7 +11,7 @@ OnHook.prototype.offHook = function offHook (data, callback) {
 
 OnHook.prototype.dial = function dial (data, callback, number) {
   console.log(`sm event:dial current state:${this.name}`)
-  callcack(this.statemachine.createNextState('ringback', { number: number }))
+  callback(null, this.statemachine.createNextState('ringback', { number: number }))
 }
 
 module.exports.OnHook = OnHook

@@ -11,7 +11,7 @@ RingBack.prototype.hangUp = function hangUp (data, callback) {
 
 RingBack.prototype.connected = function connected (data, callback) {
   console.log(`sm event:connected current state:${this.name}`)
-  callback(this.statemachine.createNextState('connected', data))
+  callback(null,this.statemachine.createNextState('connected', data))
 }
 
 module.exports.RingBack = RingBack
