@@ -23,7 +23,7 @@ exports.action = function (event, context, callback) {
             sm.StateMachine().changeStateAsync((state, data, changecallback) => state.offHook(data, changecallback), callback)
             break;
         case 'dial':
-            sm.StateMachine().changeStateAsync((state, data, changecallback) => state.dial(data, changecallback, event.number), callback)
+            sm.StateMachine().changeStateAsync((state, data, changecallback) => state.dial(data, changecallback, event.data.number), callback)
             break;
         case 'connected':
             sm.StateMachine().changeStateAsync((state, data, changecallback) => state.connected(data, changecallback), callback)
