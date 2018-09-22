@@ -1,9 +1,13 @@
 const AWS = require('aws-sdk')
 
+var s3access = process.env.AWS_LAMBDA_ACCESS_KEY_ID
+var s3secret = process.env.AWS_LAMBDA_SECRET_ACCESS_KEY
+var s3bucket = process.env.S3_BUCKET_NAME
+
 // configuring the AWS environment
 AWS.config.update({
-  accessKeyId: process.env.AWS_LAMBDA_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_LAMBDA_SECRET_ACCESS_KEY
+  accessKeyId: s3access,
+  secretAccessKey: s3secret
 })
 
 module.exports = {
@@ -14,7 +18,7 @@ module.exports = {
 
     // configuring parameters
     var params = {
-      Bucket: process.env.S3_BUCKET_NAME,
+      Bucket: s3bucket,
       Key: 'lambda state machine'
     }
 
@@ -49,7 +53,7 @@ module.exports = {
 
     // configuring parameters
     var params = {
-      Bucket: process.env.S3_BUCKET_NAME,
+      Bucket: s3bucket,
       Body: JSON.stringify(body),
       Key: 'lambda state machine'
     }
