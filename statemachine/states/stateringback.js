@@ -6,7 +6,7 @@ function RingBack (statemachine) {
 
 RingBack.prototype.hangUp = function hangUp (data, callback) {
   console.log(`sm event:hangup current state:${this.name}`)
-  callback(null, this.statemachine.createNextState('onhook', data))
+  callback(null, this.statemachine.createNextState('onhook', null))
 }
 
 RingBack.prototype.connected = function connected (data, callback) {

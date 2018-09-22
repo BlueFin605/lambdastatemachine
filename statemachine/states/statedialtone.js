@@ -11,7 +11,7 @@ DialTone.prototype.offHook = function offHook (data, callback) {
 
 DialTone.prototype.hangUp = function hangUp (data, callback) {
   console.log(`sm event:hangup current state:${this.name}`)
-  callback(null, this.statemachine.createNextState('onhook', data))
+  callback(null, this.statemachine.createNextState('onhook', null))
 }
 
 DialTone.prototype.dial = function dial (data, callback, number) {

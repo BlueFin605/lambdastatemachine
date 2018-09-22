@@ -6,7 +6,7 @@ function OnHook (statemachine) {
 
 OnHook.prototype.offHook = function offHook (data, callback) {
   console.log(`sm event:offhook current state:${this.name}`)
-  callback(null, this.statemachine.createNextState('dialtone', data))
+  callback(null, this.statemachine.createNextState('dialtone', null))
 }
 
 OnHook.prototype.dial = function dial (data, callback, number) {

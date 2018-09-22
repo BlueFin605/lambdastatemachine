@@ -6,7 +6,7 @@ function Offering (statemachine) {
 
 Offering.prototype.hangUp = function hangUp (data, callback) {
   console.log(`sm event:hangup current state:${this.name}`)
-  callback(null, this.statemachine.createNextState('onhook', data))
+  callback(null, this.statemachine.createNextState('onhook', null))
 }
 
 module.exports.offering = Offering
