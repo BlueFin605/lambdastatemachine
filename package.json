@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "aws-sdk": "^2.320.0",
-    "object-state-machine": "^1.0.19"
+    "object-state-machine": "^1.0.20"
   },
   "devDependencies": {
     "eslint": "^5.6.0",
