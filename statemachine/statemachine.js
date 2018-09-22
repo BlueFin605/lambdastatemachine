@@ -6,7 +6,7 @@ var offering = require('./states/stateoffering')
 var ringback = require('./states/stateringback')
 var connected = require('./states/stateconnected')
 
-const StateMachine = (function () {
+const StateMachine = function() {
   var states = new sm.DefaultFactory.Builder()
     .addState('onhook', (statemachine) => new onhook.OnHook(statemachine))
     .addState('dialtone', (statemachine) => new dialtone.DialTone(statemachine))
@@ -15,13 +15,11 @@ const StateMachine = (function () {
     .addState('connected', (statemachine) => new connected.Connected(statemachine))
     .build()
 
-  var statemachine = new sm.StateMachineAsync.Builder('lambda state machine', states, (creator, callback) => s3.createStateFromS3(creator, callback))
+  return new sm.StateMachineAsync.Builder('lambda state machine', states, (creator, callback) => s3.createStateFromS3(creator, callback))
     .withPersistance((state, data, callback) => {
       s3.persistStateToS3(state, data, callback)
     })
     .build()
-
-  return statemachine
-}())
+}
 
 module.exports.StateMachine = StateMachine
