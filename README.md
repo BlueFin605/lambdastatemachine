@@ -5,16 +5,9 @@ This is an example of a state machine that is implemented on the AWS server-less
 - The state and it's associated data is persisted to-from AWS S3 storage.
 - The state machine is an instance of the object-state-machine asynchronous model - StateMachineAsync 
     - https://github.com/BlueFin605/object-state-machine
-- deployment to AWS is automated using travis-ci and requires the following environment variables to be set
-    - AWS_ACCESS_KEY_ID: access key for deployment
-    - AWS_SECRET_ACCESS_KEY: secret for deployment
-    - AWS_LAMBDA_ACCESS_KEY_ID: access key for s3 storage
-    - AWS_LAMBDA_SECRET_ACCESS_KEY: secret for s3 storage
-    - S3_BUCKET_NAME: s3 bucket name
-    - AWS_ROLE: aws role
 - Each Lambda Function represents an event that can occur on the state machine
 
-This is my first attemp at this project and the approach I took, is to implement each state in it's own class and deploy all classes to each of the Lambda functions.  This is because the function relates to the event rather than the state, so potentially all states need to be available to any event.  So rather than having to try and manage what states relate to which event, I took a simplistic approach and deploy eveything to each Function.
+This is my first attempt at this project and the approach I took, is to implement each state in it's own class and deploy all classes to each of the Lambda functions.  This is because the function relates to the event rather than the state, so potentially all states need to be available to any event.  So rather than having to try and manage what states relate to which event, I took a simplistic approach and deploy eveything to each Function.
 
 ## Dependencies
 - Javascript
@@ -23,6 +16,15 @@ This is my first attemp at this project and the approach I took, is to implement
     - S3 bucket
     - Access keys to deploy Lambda functions
     - Access keys for S3 bucket
+
+## Deployment
+Uses Travis CI to deploy the Lambda functions to AWS, requiring the following evnironment variables are set within the Travis CI project
+    - AWS_ACCESS_KEY_ID: access key for deployment
+    - AWS_SECRET_ACCESS_KEY: secret for deployment
+    - AWS_LAMBDA_ACCESS_KEY_ID: access key for s3 storage
+    - AWS_LAMBDA_SECRET_ACCESS_KEY: secret for s3 storage
+    - S3_BUCKET_NAME: s3 bucket name
+    - AWS_ROLE: aws role
 
 ## To do
 - automate the provisioning of the AWS resources
