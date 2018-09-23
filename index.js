@@ -1,4 +1,5 @@
 var sm = require('./statemachine/statemachine')
+const util = requite('util')
 
 exports.offhook = function (event, context, callback) {
     sm.StateMachine().changeStateAsync((state, data, changecallback) => state.offHook(data, changecallback), callback)
@@ -17,6 +18,8 @@ exports.hangup = function (event, context, callback) {
 }
 
 exports.action = function (event, context, callback) {
+    console.log(`event:<${event}> context:<${context}> callback:<${callback}>`)
+
     switch (event.action)
     {
         case 'offhook':
