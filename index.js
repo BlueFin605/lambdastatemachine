@@ -1,5 +1,4 @@
 var sm = require('./statemachine/statemachine')
-const util = requite('util')
 
 exports.offhook = function (event, context, callback) {
     sm.StateMachine().changeStateAsync((state, data, changecallback) => state.offHook(data, changecallback), callback)
