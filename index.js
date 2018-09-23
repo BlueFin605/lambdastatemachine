@@ -18,7 +18,9 @@ exports.hangup = function (event, context, callback) {
 }
 
 exports.action = function (event, context, callback) {
-    console.log(`event:<${event}> context:<${context}> callback:<${callback}>`)
+    console.log(util.inspect(event, {showHidden: false, depth: null}))
+    console.log(util.inspect(context, {showHidden: false, depth: null}))
+    console.log(util.inspect(callback, {showHidden: false, depth: null}))
 
     switch (event.action)
     {
