@@ -1,4 +1,5 @@
 var sm = require('./statemachine/statemachine')
+var statem = require('object-state-machine')
 
 exports.offhook = function (event, context, callback) {
     sm.StateMachine().changeStateAsync((state, data, changecallback) => state.offHook(data, changecallback), callback)
@@ -18,22 +19,31 @@ exports.hangup = function (event, context, callback) {
 
 exports.action = function (event, context, callback) {
     console.log(`event:<${JSON.stringify(event)}>`)
+    processSQSBatch(event.Records, context, callback)
+}
 
-    switch (event.action)
-    {
-        case 'offhook':
-            sm.StateMachine().changeStateAsync((state, data, changecallback) => state.offHook(data, changecallback), callback)
-            break;
-        case 'dial':
-            sm.StateMachine().changeStateAsync((state, data, changecallback) => state.dial(data, changecallback, event.data.number), callback)
-            break;
-        case 'connected':
-            sm.StateMachine().changeStateAsync((state, data, changecallback) => state.connected(data, changecallback), callback)
-            break;
-        case 'hangup':
-            sm.StateMachine().changeStateAsync((state, data, changecallback) => state.hangUp(data, changecallback), callback)
-            break;
+async function processSQSBatch(batch, context, callback)
+{
+    var statemachine = sm.StateMachine()
+
+    for (const record of batch) {
+        switch (record.action) {
+            case 'offhook':
+                await statem.Promises.StateChangePromise(statemachine, (state, data, changecallback) => state.offHook(data, changecallback))
+                break;
+            case 'dial':
+                await statem.Promises.StateChangePromise(statemachine, (state, data, changecallback) => state.dial(data, changecallback, record.data.number))
+                break;
+            case 'connected':
+                await statem.Promises.StateChangePromise(statemachine, (state, data, changecallback) => state.connected(data, changecallback))
+                break;
+            case 'hangup':
+                await statem.Promises.StateChangePromise(statemachine, (state, data, changecallback) => state.hangUp(data, changecallback))
+                break;
+        }
     }
+
+    callback(null, true)
 }
 
 // function onCompleted(err, result, context, callback) {
@@ -45,3 +55,19 @@ exports.action = function (event, context, callback) {
 // this.dial({number: '+6402712345'}, null, (err, result) => console.log(`response from transition<${err}>`))
 // this.connected('event connected', null, (err, result) => console.log(`response from transition<${err}>`))
 // this.hangup('event hangup', null, (err, result) => console.log(`response from transition<${err}>`))
+
+// batchSample = {
+//     Records: [
+//         {
+//             action: 'hangup'
+//         },
+//         {
+//             action: 'offhook'
+//         },
+//         {
+//             action: 'hangup'
+//         },
+//     ]
+// }
+
+// this.action(batchSample, null, (err, result) => console.log(`response from transition<${err}>`))
