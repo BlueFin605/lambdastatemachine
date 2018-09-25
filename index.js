@@ -27,12 +27,15 @@ async function processSQSBatch(batch, context, callback)
     var statemachine = sm.StateMachine()
 
     for (const record of batch) {
-        switch (record.action) {
+        console.log(`record:<${record.body}>`)
+        let action = JSON.parse(record.body)
+        console.log(`record:<${action.action}>`)
+        switch (action.action) {
             case 'offhook':
                 await statem.Promises.StateChangePromise(statemachine, (state, data, changecallback) => state.offHook(data, changecallback))
                 break;
             case 'dial':
-                await statem.Promises.StateChangePromise(statemachine, (state, data, changecallback) => state.dial(data, changecallback, record.data.number))
+                await statem.Promises.StateChangePromise(statemachine, (state, data, changecallback) => state.dial(data, changecallback, action.data.number))
                 break;
             case 'connected':
                 await statem.Promises.StateChangePromise(statemachine, (state, data, changecallback) => state.connected(data, changecallback))
