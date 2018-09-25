@@ -2,7 +2,7 @@
   "name": "lambdastatemachine",
   "version": "1.0.0",
   "description": "\"# lambdastatemachine\"",
-  "main": "index.js",
+  "main": "./build/index.js",
   "dependencies": {
     "aws-sdk": "^2.320.0",
     "object-state-machine": "^1.0.22"
