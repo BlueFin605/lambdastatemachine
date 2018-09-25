@@ -8,10 +8,17 @@
     "object-state-machine": "^1.0.22"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "eslint": "^5.6.0",
     "eslint-config-standard": "^12.0.0"
   },
-  "scripts": {},
+  "scripts": {
+    "precompile": "npm run build:clean",
+    "compile": "npm run compile:js",
+    "build": "npm run compile",
+    "build:clean": "rimraf build/*",
+    "compile:js": "babel src -d build"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/BlueFin605/lambdastatemachine.git"

@@ -4,72 +4,87 @@ node_js:
 jobs:
   include:
   - stage: offhook
+    script:
+      - npm run build
     deploy:
       provider: lambda
       function_name: "state-event-offhook"
       region: "us-east-1"
       role: $AWS_ROLE
-      runtime: "nodejs6.10"
+      runtime: "nodejs8.10"
       handler_name: "offhook"
       environment_variables:
         - AWS_LAMBDA_ACCESS_KEY_ID=$AWS_LAMBDA_ACCESS_KEY_ID
         - AWS_LAMBDA_SECRET_ACCESS_KEY=$AWS_LAMBDA_SECRET_ACCESS_KEY
         - S3_BUCKET_NAME=$S3_BUCKET_NAME
+      local_dir: build
       on:
         branch: master
   - stage: dial
+    script:
+      - npm run build
     deploy:
       provider: lambda
       function_name: "state-event-dial"
       region: "us-east-1"
       role: $AWS_ROLE
-      runtime: "nodejs6.10"
+      runtime: "nodejs8.10"
       handler_name: "dial"
       environment_variables:
         - AWS_LAMBDA_ACCESS_KEY_ID=$AWS_LAMBDA_ACCESS_KEY_ID
         - AWS_LAMBDA_SECRET_ACCESS_KEY=$AWS_LAMBDA_SECRET_ACCESS_KEY
         - S3_BUCKET_NAME=$S3_BUCKET_NAME
+      local_dir: build
       on:
         branch: master
   - stage: connected
+    script:
+      - npm run build
     deploy:
       provider: lambda
       function_name: "state-event-connected"
       region: "us-east-1"
       role: $AWS_ROLE
-      runtime: "nodejs6.10"
+      runtime: "nodejs8.10"
       handler_name: "connected"
       environment_variables:
         - AWS_LAMBDA_ACCESS_KEY_ID=$AWS_LAMBDA_ACCESS_KEY_ID
         - AWS_LAMBDA_SECRET_ACCESS_KEY=$AWS_LAMBDA_SECRET_ACCESS_KEY
         - S3_BUCKET_NAME=$S3_BUCKET_NAME
+      local_dir: build
       on:
         branch: master
   - stage: hangup
+    script:
+      - npm run build
     deploy:
       provider: lambda
       function_name: "state-event-hangup"
       region: "us-east-1"
       role: $AWS_ROLE
-      runtime: "nodejs6.10"
+      runtime: "nodejs8.10"
       handler_name: "hangup"
       environment_variables:
         - AWS_LAMBDA_ACCESS_KEY_ID=$AWS_LAMBDA_ACCESS_KEY_ID
         - AWS_LAMBDA_SECRET_ACCESS_KEY=$AWS_LAMBDA_SECRET_ACCESS_KEY
         - S3_BUCKET_NAME=$S3_BUCKET_NAME
+      local_dir: build
       on:
         branch: master
   - stage: action
+    script:
+      - npm run build
     deploy:
       provider: lambda
       function_name: "state-event-action"
       region: "us-east-1"
       role: $AWS_ROLE
-      runtime: "nodejs6.10"
+      runtime: "nodejs8.10"
       handler_name: "action"
       environment_variables:
         - AWS_LAMBDA_ACCESS_KEY_ID=$AWS_LAMBDA_ACCESS_KEY_ID
         - AWS_LAMBDA_SECRET_ACCESS_KEY=$AWS_LAMBDA_SECRET_ACCESS_KEY
         - S3_BUCKET_NAME=$S3_BUCKET_NAME
+      local_dir: build
       on:
         branch: master
