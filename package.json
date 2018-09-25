@@ -2,23 +2,16 @@
   "name": "lambdastatemachine",
   "version": "1.0.0",
   "description": "\"# lambdastatemachine\"",
-  "main": "./build/index.js",
+  "main": "index.js",
   "dependencies": {
     "aws-sdk": "^2.320.0",
     "object-state-machine": "^1.0.22"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
     "eslint": "^5.6.0",
     "eslint-config-standard": "^12.0.0"
   },
-  "scripts": {
-    "precompile": "npm run build:clean",
-    "compile": "npm run compile:js",
-    "build": "npm run compile",
-    "build:clean": "rimraf build/*",
-    "compile:js": "babel src -d build"
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/BlueFin605/lambdastatemachine.git"
