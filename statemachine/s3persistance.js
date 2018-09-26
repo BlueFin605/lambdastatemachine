@@ -41,8 +41,6 @@ module.exports = {
     })
   },
   persistStateToS3: function(state, data, callback) {
-    console.log(`persistStateToS3 ${state}:${data}`)
-
     var s3 = new AWS.S3()
 
     var body = {
@@ -50,10 +48,13 @@ module.exports = {
       data: data
     }
 
+    var bodySrfy = JSON.stringify(body)
+    console.log(`persistStateToS3 ${state}:${bodySrfy}`)
+
     // configuring parameters
     var params = {
       Bucket: s3bucket,
-      Body: JSON.stringify(body),
+      Body: bodySrfy,
       Key: 'lambda state machine'
     }
 
