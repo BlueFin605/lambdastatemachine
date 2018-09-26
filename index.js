@@ -19,34 +19,56 @@ exports.hangup = function (event, context, callback) {
 
 exports.action = function (event, context, callback) {
     console.log(`event:<${JSON.stringify(event)}>`)
-    processSQSBatch(event.Records, context, callback)
-}
-
-async function processSQSBatch(batch, context, callback)
-{
     var statemachine = sm.StateMachine()
 
-    for (const record of batch) {
-        console.log(`record:<${record.body}>`)
-        let action = JSON.parse(record.body)
-        console.log(`record:<${action.action}>`)
-        switch (action.action) {
-            case 'offhook':
-                await statem.Promises.StateChangePromise(statemachine, (state, data, changecallback) => state.offHook(data, changecallback))
-                break;
-            case 'dial':
-                await statem.Promises.StateChangePromise(statemachine, (state, data, changecallback) => state.dial(data, changecallback, action.data.number))
-                break;
-            case 'connected':
-                await statem.Promises.StateChangePromise(statemachine, (state, data, changecallback) => state.connected(data, changecallback))
-                break;
-            case 'hangup':
-                await statem.Promises.StateChangePromise(statemachine, (state, data, changecallback) => state.hangUp(data, changecallback))
-                break;
-        }
+    for (const record of event.Records) {
+        processRecord(statemachine, record)
     }
 
     callback(null, true)
+}
+
+function processRecord(statemachine, record) {
+    if (record.kinesis != null)
+        processKinesisRecord(statemachine, record)
+    else
+    if (record.body != null)
+        processSQSRecord(statemachine, record)
+    else
+        console.log('unknown payload type')
+}
+
+function processKinesisRecord(statemachine, record) {
+    // Kinesis data is base64 encoded so decode here
+    var payload = new Buffer(record.kinesis.data, 'base64').toString('ascii');
+    console.log('Kinesis: Decoded payload:', payload);
+    let action = JSON.parse(pyload)
+    console.log(`Linesis: record:<${action.action}>`)
+    processAction(statemachine, action)
+}
+
+function processSQSRecord(statemachine, record) {
+    console.log(`SQS: record:<${record.body}>`)
+    let action = JSON.parse(record.body)
+    console.log(`SQS: record:<${action.action}>`)
+    processAction(statemachine, action)
+}
+
+async function processAction(statemachine, action) {
+    switch (action) {
+        case 'offhook':
+            await statem.Promises.StateChangePromise(statemachine, (state, data, changecallback) => state.offHook(data, changecallback))
+            break;
+        case 'dial':
+            await statem.Promises.StateChangePromise(statemachine, (state, data, changecallback) => state.dial(data, changecallback, action.data.number))
+            break;
+        case 'connected':
+            await statem.Promises.StateChangePromise(statemachine, (state, data, changecallback) => state.connected(data, changecallback))
+            break;
+        case 'hangup':
+            await statem.Promises.StateChangePromise(statemachine, (state, data, changecallback) => state.hangUp(data, changecallback))
+            break;
+    }
 }
 
 // function onCompleted(err, result, context, callback) {
