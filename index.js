@@ -47,7 +47,7 @@ function processKinesisRecord(statemachine, record) {
     var payload = new Buffer(record.kinesis.data, 'base64').toString('ascii');
     console.log('Kinesis: Decoded payload:', payload);
     let action = JSON.parse(payload)
-    console.log(`Linesis: record:<${action.action}>`)
+    console.log(`Kinesis: record:<${action.action}>`)
     processAction(statemachine, action)
 }
 
@@ -59,7 +59,7 @@ function processSQSRecord(statemachine, record) {
 }
 
 async function processAction(statemachine, action) {
-    switch (action) {
+    switch (action.action) {
         case 'offhook':
             await statem.Promises.StateChangePromise(statemachine, (state, data, changecallback) => state.offHook(data, changecallback))
             break;
