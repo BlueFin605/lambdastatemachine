@@ -18,11 +18,15 @@ exports.hangup = function (event, context, callback) {
 }
 
 exports.action = function (event, context, callback) {
-    console.log(`event:<${JSON.stringify(event)}>`)
-    var statemachine = sm.StateMachine()
+    try {
+        console.log(`event:<${JSON.stringify(event)}>`)
+        var statemachine = sm.StateMachine()
 
-    for (const record of event.Records) {
-        processRecord(statemachine, record)
+        for (const record of event.Records) {
+            processRecord(statemachine, record)
+        }
+    } catch (err) {
+        console.log(err.message)
     }
 
     callback(null, true)
@@ -35,7 +39,7 @@ function processRecord(statemachine, record) {
     if (record.body != null)
         processSQSRecord(statemachine, record)
     else
-        console.log('unknown payload type')
+        console.log('unknown payload type');
 }
 
 function processKinesisRecord(statemachine, record) {
