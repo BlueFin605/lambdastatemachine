@@ -26,7 +26,7 @@ exports.action = function (event, context, callback) {
             processRecord(statemachine, record)
         }
     } catch (err) {
-        console.log(err.message)
+        console.log('Caught Error:', err.message)
     }
 
     callback(null, true)
@@ -46,7 +46,7 @@ function processKinesisRecord(statemachine, record) {
     // Kinesis data is base64 encoded so decode here
     var payload = new Buffer(record.kinesis.data, 'base64').toString('ascii');
     console.log('Kinesis: Decoded payload:', payload);
-    let action = JSON.parse(pyload)
+    let action = JSON.parse(payload)
     console.log(`Linesis: record:<${action.action}>`)
     processAction(statemachine, action)
 }
