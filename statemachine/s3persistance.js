@@ -11,7 +11,7 @@ AWS.config.update({
 })
 
 module.exports = {
-  createStateFromS3: function(creator, callback) {
+  createStateFromS3: function (creator, callback) {
     var s3 = new AWS.S3()
 
     // configuring parameters
@@ -40,7 +40,7 @@ module.exports = {
       return callback(null, creator.createNextState('onhook', null))
     })
   },
-  persistStateToS3: function(state, data, callback) {
+  persistStateToS3: function (state, data, callback) {
     var s3 = new AWS.S3()
 
     var body = {
