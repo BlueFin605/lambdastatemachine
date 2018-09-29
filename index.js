@@ -45,7 +45,7 @@ function processRecord (statemachine, record) {
 
 function processKinesisRecord (statemachine, record) {
   // Kinesis data is base64 encoded so decode here
-  var payload = new Buffer(record.kinesis.data, 'base64').toString('ascii')
+  var payload = new Buffer.Alloc(record.kinesis.data, 'base64').toString('ascii')
   console.log('Kinesis: Decoded payload:', payload)
   let action = JSON.parse(payload)
   console.log(`Kinesis: record:<${action.action}>`)
