@@ -1,7 +1,7 @@
 const AWS = require('aws-sdk')
 
-// var s3access = 'AKIAJO6TVRXRYJ7Y2RHQ'
-// var s3secret = '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'
+// var s3access = process.env.AWS_LAMBDA_ACCESS_KEY_ID
+// var s3secret = process.env.AWS_LAMBDA_SECRET_ACCESS_KEY
 var s3bucket = 'djmstatemachine-state'
 
 // configuring the AWS environment

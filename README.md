@@ -22,7 +22,6 @@ This is my first attempt at this project and the approach I took, is to implemen
 Uses Travis CI to deploy the Lambda functions to AWS, requiring the following evnironment variables are set within the Travis CI project
 - AWS_ACCESS_KEY_ID: access key for deployment
 - AWS_SECRET_ACCESS_KEY: secret for deployment
-- S3_BUCKET_NAME: s3 bucket name
 - AWS_ROLE: aws role
 
 ## To do
