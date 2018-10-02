@@ -1,14 +1,14 @@
 const AWS = require('aws-sdk')
 
-var s3access = process.env.AWS_LAMBDA_ACCESS_KEY_ID
-var s3secret = process.env.AWS_LAMBDA_SECRET_ACCESS_KEY
+// var s3access = process.env.AWS_LAMBDA_ACCESS_KEY_ID
+// var s3secret = process.env.AWS_LAMBDA_SECRET_ACCESS_KEY
 var s3bucket = process.env.S3_BUCKET_NAME
 
 // configuring the AWS environment
-AWS.config.update({
-  accessKeyId: s3access,
-  secretAccessKey: s3secret
-})
+// AWS.config.update({
+//   accessKeyId: s3access,
+//   secretAccessKey: s3secret
+// })
 
 module.exports = {
   createStateFromS3: function (creator, callback) {
